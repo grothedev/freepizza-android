@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     ListView siteListView;
     APICaller api;
 
+    Site[] sites;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
 
         initUIElements();
         api = new APICaller(this);
+        new GetSitesTask().execute(api);
+
 
         //make the background API call
-
-
 
         //wait for response, and update listview when data comes in
 
