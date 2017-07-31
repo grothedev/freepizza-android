@@ -37,6 +37,6 @@ public class Site {
     }
 
     public String toString(){
-        return "this is food site. " + food;
+        return location + " - " + food + "\n" + day + " - " + start + " to " + end;
     }
 }

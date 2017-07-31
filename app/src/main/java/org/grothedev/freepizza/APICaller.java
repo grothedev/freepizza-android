@@ -32,6 +32,9 @@ public class APICaller {
     private final int SITES_INDEX = 0;
     private final int SITES_SHOW = 1;
     private final int SITES_LOCATION_SEARCH = 2;
+    private final int SITES_STORE = 4;
+    private final int VOTES_STORE = 5;
+    private final int VOTES_INDEX = 6;
 
     Site[] sites; //should this be stored in this class?
 
@@ -94,7 +97,12 @@ public class APICaller {
                 }
                 done = true;
                 break;
-            
+            case SITES_STORE:
+                //TODO
+                break;
+            case SITES_LOCATION_SEARCH:
+                //TODO
+                break;
             default:
                 break;
 
