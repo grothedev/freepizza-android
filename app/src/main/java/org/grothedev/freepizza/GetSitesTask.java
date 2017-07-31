@@ -2,6 +2,8 @@ package org.grothedev.freepizza;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 /**
  * Created by thomas on 29/07/17.
@@ -9,17 +11,24 @@ import android.util.Log;
 
 public class GetSitesTask extends AsyncTask {
 
-
+    APICaller api;
+    ListView sitesListView;
 
     @Override
     protected Object doInBackground(Object[] objects) {
 
-        APICaller api = (APICaller) objects[0];
+        api = (APICaller) objects[0];
         api.getSites();
+
+        sitesListView = (ListView) objects[1];
+
         return null;
     }
 
-    protected void onPostExecute(Long result){
+    @Override
+    protected void onPostExecute(Object result){
 
+        ArrayAdapter<Site> listAdapter = new ArrayAdapter<Site>(api.context, R.layout.list_item, api.sites);
+        sitesListView.setAdapter(listAdapter);
     }
 }

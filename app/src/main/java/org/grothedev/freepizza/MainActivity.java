@@ -3,6 +3,7 @@ package org.grothedev.freepizza;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.android.volley.Cache;
@@ -26,9 +27,12 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     ListView siteListView;
+    ArrayAdapter<Site> listAdapter;
+
     APICaller api;
 
     Site[] sites;
+    String[] sitesStr; //currently testing the adapter with simple strings
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +40,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initUIElements();
+
         api = new APICaller(this);
-        new GetSitesTask().execute(api);
+        new GetSitesTask().execute(api, siteListView);
 
-
-        //make the background API call
 
         //wait for response, and update listview when data comes in
 
@@ -48,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initUIElements(){
+        sitesStr = new String[]{"test", "two"};
+
         siteListView = (ListView) findViewById(R.id.listViewSites);
+
+
     }
 }

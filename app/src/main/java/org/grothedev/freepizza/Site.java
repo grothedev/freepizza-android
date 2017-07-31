@@ -35,4 +35,8 @@ public class Site {
             e.printStackTrace();
         }
     }
+
+    public String toString(){
+        return "this is food site. " + food;
+    }
 }
