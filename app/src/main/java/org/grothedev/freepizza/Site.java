@@ -36,6 +36,11 @@ public class Site {
         }
     }
 
+    //when submitting new site
+    public Site(String food, String info, String location, String day, String start, String end){
+        //TODO construct
+    }
+
     public String toString(){
         return location + " - " + food + "\n" + day + " - " + start + " to " + end;
     }

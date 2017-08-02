@@ -1,38 +1,23 @@
 package org.grothedev.freepizza;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
-import com.android.volley.Cache;
-import com.android.volley.Network;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.net.URL;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddSiteFragment.OnSubmitListener{
 
     ListView siteListView;
     ArrayAdapter<Site> listAdapter;
+    Button addSiteButton;
 
     APICaller api;
 
     Site[] sites;
-    String[] sitesStr; //currently testing the adapter with simple strings
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +36,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initUIElements(){
-        sitesStr = new String[]{"test", "two"};
-
         siteListView = (ListView) findViewById(R.id.listViewSites);
 
+        FragmentManager fragmentManager = getFragmentManager();
+        final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+
+        addSiteButton = (Button) findViewById(R.id.buttonAddSite);
+        addSiteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //show fragment for entering data for new site
+                AddSiteFragment addSiteFragment = new AddSiteFragment();
+                fragmentTransaction.add(android.R.id.content, addSiteFragment);
+
+                fragmentTransaction.commit();
+            }
+        });
+
+    }
+
+    public void onSubmitButtonPressed(Site site){
+        if (api.postSite(site)){
+            //add to sites
+        } else {
+            //report failure
+        }
 
     }
 }

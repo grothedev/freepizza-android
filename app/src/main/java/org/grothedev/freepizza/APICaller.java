@@ -80,6 +80,25 @@ public class APICaller {
         }
     }
 
+    public void postSite(Site site){
+        String url = "http://gdev.ddns.net:8000/api/sites";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONArray>(){
+                    @Override
+                    public void onResponse(JSONArray response){
+                        handleResponse(response, SITES_INDEX);
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+                        Log.d("error", error.getMessage());
+                    }
+                });
+
+        requestQueue.add(request);
+    }
+
 
 
     private void handleResponse(JSONArray response, int code){
