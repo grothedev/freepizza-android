@@ -26,20 +26,20 @@ import org.json.JSONObject;
 
 public class APICaller {
 
-    RequestQueue requestQueue;
+    static RequestQueue requestQueue;
     Context context;
 
-    private final int SITES_INDEX = 0;
-    private final int SITES_SHOW = 1;
-    private final int SITES_LOCATION_SEARCH = 2;
-    private final int SITES_STORE = 4;
-    private final int VOTES_STORE = 5;
-    private final int VOTES_INDEX = 6;
+    static private final int SITES_INDEX = 0;
+    static private final int SITES_SHOW = 1;
+    static private final int SITES_LOCATION_SEARCH = 2;
+    static private final int SITES_STORE = 4;
+    static private final int VOTES_STORE = 5;
+    static private final int VOTES_INDEX = 6;
 
-    Site[] sites; //should this be stored in this class?
+    static Site[] sites; //should this be stored in this class?
 
-    boolean done = false;
-    int timeout = 100;
+    static boolean done = false;
+    static int timeout = 100;
 
     public APICaller(Context context){
         this.context = context;
@@ -49,7 +49,7 @@ public class APICaller {
         requestQueue.start();
     }
 
-    public void getSites(){
+    public static void getSites(){
         String url = "http://gdev.ddns.net:8000/api/sites";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>(){
@@ -80,13 +80,14 @@ public class APICaller {
         }
     }
 
-    public void postSite(Site site){
+    public static void postSite(Site site){
         String url = "http://gdev.ddns.net:8000/api/sites";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, null,
                 new Response.Listener<JSONArray>(){
                     @Override
                     public void onResponse(JSONArray response){
-                        handleResponse(response, SITES_INDEX);
+                        handleResponse(response, SITES_STORE);
+
                     }
                 },
                 new Response.ErrorListener(){
@@ -101,7 +102,7 @@ public class APICaller {
 
 
 
-    private void handleResponse(JSONArray response, int code){
+    private static void handleResponse(JSONArray response, int code){
         switch (code){
             case SITES_INDEX:
 
@@ -117,7 +118,7 @@ public class APICaller {
                 done = true;
                 break;
             case SITES_STORE:
-                //TODO
+
                 break;
             case SITES_LOCATION_SEARCH:
                 //TODO

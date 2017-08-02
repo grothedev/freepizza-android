@@ -4,18 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="org.grothedev.freepizza.MainActivity">
 
     <ListView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
         android:id="@+id/listViewSites" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonAddSite"/>
+        android:layout_weight="1"
+        android:padding="5dp"
+        android:id="@+id/buttonAddSite"
+        android:text = "Add new Location"/>
 
 </LinearLayout>

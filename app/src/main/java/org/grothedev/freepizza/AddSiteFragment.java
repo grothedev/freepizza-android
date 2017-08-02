@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,19 +39,26 @@ public class AddSiteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        initUIElements();
+
         return inflater.inflate(R.layout.add_site_fragment, container, false);
     }
 
-    private void initUIElements(){
-        foodInput = (EditText) getActivity().findViewById(R.id.editTextFood);
-        infoInput = (EditText) getActivity().findViewById(R.id.editTextInfo);
-        locationInput = (EditText) getActivity().findViewById(R.id.editTextLocation);
-        dayInput = (EditText) getActivity().findViewById(R.id.editTextDay);
-        startInput = (EditText) getActivity().findViewById(R.id.editTextStartTime);
-        endInput = (EditText) getActivity().findViewById(R.id.editTextEndTime);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initUIElements();
+    }
 
-        submitButton = (Button) getActivity().findViewById(R.id.buttonAddSite);
+    private void initUIElements(){
+        foodInput = (EditText) getView().findViewById(R.id.editTextFood);
+        infoInput = (EditText) getView().findViewById(R.id.editTextInfo);
+        locationInput = (EditText) getView().findViewById(R.id.editTextLocation);
+        dayInput = (EditText) getView().findViewById(R.id.editTextDay);
+        startInput = (EditText) getView().findViewById(R.id.editTextStartTime);
+        endInput = (EditText) getView().findViewById(R.id.editTextEndTime);
+
+        submitButton = (Button) getView().findViewById(R.id.buttonSubmit);
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,7 +71,9 @@ public class AddSiteFragment extends Fragment {
                                 startInput.getText().toString(),
                                 endInput.getText().toString());
 
-                onSubmitListener.onSubmitButtonPressed(toAdd);
+                //onSubmitListener.onSubmitButtonPressed(toAdd); why did i do it this way and not asynctask?
+
+                new AddSiteTask().execute(toAdd);
             }
         });
     }

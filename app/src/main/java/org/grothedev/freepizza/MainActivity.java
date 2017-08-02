@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements AddSiteFragment.O
             public void onClick(View view) {
                 //show fragment for entering data for new site
                 AddSiteFragment addSiteFragment = new AddSiteFragment();
-                fragmentTransaction.add(android.R.id.content, addSiteFragment);
+                fragmentTransaction.replace(android.R.id.content, addSiteFragment).addToBackStack("add_frag");
 
                 fragmentTransaction.commit();
             }
@@ -57,11 +58,7 @@ public class MainActivity extends AppCompatActivity implements AddSiteFragment.O
     }
 
     public void onSubmitButtonPressed(Site site){
-        if (api.postSite(site)){
-            //add to sites
-        } else {
-            //report failure
-        }
+        api.postSite(site);
 
     }
 }
