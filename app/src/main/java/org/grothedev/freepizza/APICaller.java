@@ -88,7 +88,7 @@ public class APICaller {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        Log.d("error", error.getMessage());
+                        Log.d("error", error.networkResponse.headers.toString() + ", " + error.networkResponse.data);
                     }
                 }){
             @Override
