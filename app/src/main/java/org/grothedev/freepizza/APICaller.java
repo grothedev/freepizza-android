@@ -3,6 +3,7 @@ package org.grothedev.freepizza;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
 import com.android.volley.Network;
 import com.android.volley.Request;
@@ -13,13 +14,19 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * this class uses the json request methods in the http utils class to get/send data from/to the server, and then
+ * this class uses the json request methods in the http utils class to get/send data from/to the server.
+ *
  *
  * Created by thomas on 29/07/17.
  */
@@ -27,7 +34,7 @@ import org.json.JSONObject;
 public class APICaller {
 
     static RequestQueue requestQueue;
-    Context context;
+
 
     static private final int SITES_INDEX = 0;
     static private final int SITES_SHOW = 1;
@@ -38,18 +45,13 @@ public class APICaller {
 
     static Site[] sites; //should this be stored in this class?
 
-    static boolean done = false;
+    static boolean done = false; //used to signifity when the current operation is complete
+    static boolean success = false; //signifies success of operation (ex: if a site has successfully been submitted to the server)
+
     static int timeout = 100;
 
-    public APICaller(Context context){
-        this.context = context;
-        Cache cache = new DiskBasedCache(context.getCacheDir(), 1024*1024);
-        Network network = new BasicNetwork(new HurlStack());
-        requestQueue = new RequestQueue(cache, network);
-        requestQueue.start();
-    }
-
     public static void getSites(){
+        resetFlags();
         String url = "http://gdev.ddns.net:8000/api/sites";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>(){
@@ -67,6 +69,95 @@ public class APICaller {
 
         requestQueue.add(request);
 
+        waitForCompletion();
+    }
+
+    public static void postSite(Site site){
+        String url = "http://gdev.ddns.net:8000/api/sites";
+
+        final Site toAdd = site;
+
+
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+                        handleResponse(response, SITES_STORE);
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+                        Log.d("error", error.getMessage());
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("food", toAdd.food);
+                params.put("info", toAdd.info);
+                params.put("day", toAdd.day);
+                params.put("start", toAdd.start);
+                params.put("end", toAdd.end);
+                params.put("location", toAdd.location);
+                params.put("votes_total", "0");
+                params.put("votes_true", "0");
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError{
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type","application/x-www-form-urlencoded");
+                return headers;
+            }
+
+        };
+
+        requestQueue.add(request);
+
+        waitForCompletion();
+    }
+
+
+    private static void handleResponse(String response, int code){
+        switch (code){
+            case SITES_STORE:
+                    Log.d("add response", ""+response);
+
+                done = true;
+                break;
+        }
+    }
+
+    private static void handleResponse(JSONArray response, int code){
+        switch (code){
+            case SITES_INDEX:
+
+                if (response.length() == 0) success = false;
+                else {
+                    sites = new Site[response.length()];
+                    for (int i = 0; i < response.length(); i++){
+                        try {
+                            JSONObject jo  = new JSONObject(response.get(i).toString());
+                            sites[i] = new Site(jo);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                success = true;
+                done = true;
+                break;
+            case SITES_LOCATION_SEARCH:
+                //TODO
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    private static void waitForCompletion(){
         int c = 0;
         while (!done && c < timeout){ //wait for sites to be downlaoded
             c++;
@@ -80,52 +171,8 @@ public class APICaller {
         }
     }
 
-    public static void postSite(Site site){
-        String url = "http://gdev.ddns.net:8000/api/sites";
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, null,
-                new Response.Listener<JSONArray>(){
-                    @Override
-                    public void onResponse(JSONArray response){
-                        handleResponse(response, SITES_STORE);
-
-                    }
-                },
-                new Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(VolleyError error){
-                        Log.d("error", error.getMessage());
-                    }
-                });
-
-        requestQueue.add(request);
-    }
-
-
-
-    private static void handleResponse(JSONArray response, int code){
-        switch (code){
-            case SITES_INDEX:
-
-                sites = new Site[response.length()];
-                for (int i = 0; i < response.length(); i++){
-                    try {
-                        JSONObject jo  = new JSONObject(response.get(i).toString());
-                        sites[i] = new Site(jo);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                done = true;
-                break;
-            case SITES_STORE:
-
-                break;
-            case SITES_LOCATION_SEARCH:
-                //TODO
-                break;
-            default:
-                break;
-
-        }
+    private static void resetFlags(){
+        done = false;
+        success = false;
     }
 }

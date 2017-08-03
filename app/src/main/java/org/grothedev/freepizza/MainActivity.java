@@ -10,13 +10,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+
 public class MainActivity extends AppCompatActivity implements AddSiteFragment.OnSubmitListener{
 
     ListView siteListView;
     ArrayAdapter<Site> listAdapter;
     Button addSiteButton;
 
-    APICaller api;
 
     Site[] sites;
 
@@ -26,9 +32,9 @@ public class MainActivity extends AppCompatActivity implements AddSiteFragment.O
         setContentView(R.layout.activity_main);
 
         initUIElements();
+        initAPICaller();
 
-        api = new APICaller(this);
-        new GetSitesTask().execute(api, siteListView);
+        new GetSitesTask().execute(this, siteListView);
 
 
         //wait for response, and update listview when data comes in
@@ -57,8 +63,15 @@ public class MainActivity extends AppCompatActivity implements AddSiteFragment.O
 
     }
 
+    private void initAPICaller(){
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024*1024);
+        Network network = new BasicNetwork(new HurlStack());
+        APICaller.requestQueue = new RequestQueue(cache, network);
+        APICaller.requestQueue.start();
+    }
+
     public void onSubmitButtonPressed(Site site){
-        api.postSite(site);
+        APICaller.postSite(site);
 
     }
 }

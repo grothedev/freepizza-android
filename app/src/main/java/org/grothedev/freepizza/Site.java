@@ -38,7 +38,14 @@ public class Site {
 
     //when submitting new site
     public Site(String food, String info, String location, String day, String start, String end){
-        //TODO construct
+        this.info = info;
+        this.day = day;
+        this.start = start;
+        this.end = end;
+        this.food = food;
+        this.location = location;
+        this.votesTotal = 0;
+        this.votesTrue = 0;
     }
 
     public String toString(){

@@ -1,5 +1,6 @@
 package org.grothedev.freepizza;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -11,14 +12,15 @@ import android.widget.ListView;
 
 public class GetSitesTask extends AsyncTask {
 
-    APICaller api;
     ListView sitesListView;
+    Context context;
 
     @Override
     protected Object doInBackground(Object[] objects) {
 
-        api = (APICaller) objects[0];
-        api.getSites();
+        this.context = (Context) objects[0];
+
+        APICaller.getSites();
 
         //TODO i think i will also get the votes for each site here and put it into the sites array
 
@@ -30,7 +32,7 @@ public class GetSitesTask extends AsyncTask {
     @Override
     protected void onPostExecute(Object result){
 
-        ArrayAdapter<Site> listAdapter = new ArrayAdapter<Site>(api.context, R.layout.list_item, api.sites);
+        ArrayAdapter<Site> listAdapter = new ArrayAdapter<Site>(context, R.layout.list_item, APICaller.sites);
         sitesListView.setAdapter(listAdapter);
     }
 }
