@@ -28,23 +28,18 @@
         android:id="@+id/datePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:spinnersShown="true" />
 
-    <EditText
-        android:id="@+id/editTextStartTime"
+    <TimePicker
+        android:id="@+id/timePickerStart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time"
-        android:layout_weight="2"/>
+        android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/editTextEndTime"
+    <TimePicker
+        android:id="@+id/timePickerEnd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time"
-        android:layout_weight="2"/>
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/buttonSubmit"

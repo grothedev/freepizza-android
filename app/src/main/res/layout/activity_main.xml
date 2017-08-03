@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="org.grothedev.freepizza.MainActivity">
+    tools:context="org.grothedev.freepizza.MainActivity"
+    android:id="@+id/container">
 
     <ListView
         android:layout_width="match_parent"

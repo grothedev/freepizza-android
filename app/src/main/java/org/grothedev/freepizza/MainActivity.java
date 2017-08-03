@@ -2,6 +2,8 @@ package org.grothedev.freepizza;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +19,9 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 
-public class MainActivity extends AppCompatActivity implements AddSiteFragment.OnSubmitListener{
+import java.io.Serializable;
+
+public class MainActivity extends AppCompatActivity{
 
     ListView siteListView;
     ArrayAdapter<Site> listAdapter;
@@ -54,10 +58,16 @@ public class MainActivity extends AppCompatActivity implements AddSiteFragment.O
             @Override
             public void onClick(View view) {
                 //show fragment for entering data for new site
-                AddSiteFragment addSiteFragment = new AddSiteFragment();
-                fragmentTransaction.replace(android.R.id.content, addSiteFragment).addToBackStack("add_frag");
+                /*AddSiteFragment addSiteFragment = new AddSiteFragment();
+                fragmentTransaction.replace(R.id.container, addSiteFragment).addToBackStack("add_frag");
 
                 fragmentTransaction.commit();
+                */
+
+                //trying activiity instead of fragment
+                Intent addSiteIntent = new Intent(getApplicationContext(), AddSiteActivity.class);
+
+                startActivity(addSiteIntent);
             }
         });
 
@@ -70,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements AddSiteFragment.O
         APICaller.requestQueue.start();
     }
 
-    public void onSubmitButtonPressed(Site site){
+    /*public void onSubmitButtonPressed(Site site){
         APICaller.postSite(site);
 
-    }
+    }*/
 }

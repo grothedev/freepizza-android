@@ -1,14 +1,17 @@
 package org.grothedev.freepizza;
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 /**
@@ -19,15 +22,13 @@ public class AddSiteFragment extends Fragment {
 
     Site toAdd;
 
-    EditText foodInput, infoInput, locationInput, dayInput, startInput, endInput;
+    EditText foodInput, infoInput, locationInput, startInput, endInput;
     Button submitButton;
-
-    OnSubmitListener onSubmitListener;
+    DatePicker dayInput;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        onSubmitListener = (OnSubmitListener) context;
     }
 
     @Override
@@ -53,21 +54,22 @@ public class AddSiteFragment extends Fragment {
         foodInput = (EditText) getView().findViewById(R.id.editTextFood);
         infoInput = (EditText) getView().findViewById(R.id.editTextInfo);
         locationInput = (EditText) getView().findViewById(R.id.editTextLocation);
-        dayInput = (EditText) getView().findViewById(R.id.editTextDay);
+        dayInput = (DatePicker) getView().findViewById(R.id.datePicker);
         startInput = (EditText) getView().findViewById(R.id.editTextStartTime);
         endInput = (EditText) getView().findViewById(R.id.editTextEndTime);
 
         submitButton = (Button) getView().findViewById(R.id.buttonSubmit);
 
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //any validation necessary here or ok to deal with on server?
-
+                Log.d("date", dayInput.toString());
                 toAdd = new Site(foodInput.getText().toString(),
                                 infoInput.getText().toString(),
                                 locationInput.getText().toString(),
-                                dayInput.getText().toString(),
+                                "placeholder", //day input here
                                 startInput.getText().toString(),
                                 endInput.getText().toString());
 
@@ -76,9 +78,5 @@ public class AddSiteFragment extends Fragment {
                 new AddSiteTask().execute(toAdd);
             }
         });
-    }
-
-    public interface OnSubmitListener{
-        public void onSubmitButtonPressed(Site site);
     }
 }
