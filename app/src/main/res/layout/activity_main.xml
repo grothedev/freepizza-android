@@ -11,17 +11,22 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
-        android:id="@+id/listViewSites" />
+        android:id="@+id/listViewSites"
+        android:layout_weight="2"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:padding="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:id="@+id/buttonAddSite"
-        android:text = "Add new Location"/>
+        android:text = "Add new Location"
+        android:minWidth="120dp"
+        android:minHeight="60dp"
+        android:layout_margin="8dp"
+        android:layout_weight="1"/>
 
 </LinearLayout>

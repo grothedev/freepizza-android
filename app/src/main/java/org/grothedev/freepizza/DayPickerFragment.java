@@ -13,12 +13,12 @@ import java.util.Calendar;
  * Created by thomas on 05/08/17.
  */
 
-public class DayPickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+public class DayPickerFragment extends DialogFragment{
 
     public String dayStr; //string representing the date, to be sent to server
     public Site toAdd;
 
-
+    private DatePickerDialog.OnDateSetListener dateSetListener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -28,11 +28,9 @@ public class DayPickerFragment extends DialogFragment implements DatePickerDialo
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        return new DatePickerDialog(getActivity(), this, year, month, day);
+        dateSetListener = (DatePickerDialog.OnDateSetListener) getActivity();
+
+        return new DatePickerDialog(getActivity(), dateSetListener, year, month+1, day); //adding 1 to month because starts at 0
     }
 
-    @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-        dayStr = year + "-" + month + "-" + day;
-    }
 }

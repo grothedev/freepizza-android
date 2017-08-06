@@ -63,7 +63,8 @@ public class APICaller {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        Log.d("error", error.getMessage());
+                        handleResponse(new JSONArray(), SITES_INDEX); //empty json array to signify error
+                        Log.d("error", "sites were not able to be downloaded");
                     }
                 });
 
@@ -133,7 +134,10 @@ public class APICaller {
         switch (code){
             case SITES_INDEX:
 
-                if (response.length() == 0) success = false;
+                if (response.length() == 0) {
+                    success = false;
+                    sites = new Site[]{new Site("there was an error retreiving the locations from the server", "", "", "", "", "")};
+                }
                 else {
                     sites = new Site[response.length()];
                     for (int i = 0; i < response.length(); i++){

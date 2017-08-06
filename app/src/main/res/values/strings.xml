@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FreePizza</string>
+    <string name="buttonHeight">35dp</string>
+    <string name = "buttonWidth">80dp</string>
 </resources>

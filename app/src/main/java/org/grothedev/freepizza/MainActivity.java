@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -80,8 +81,5 @@ public class MainActivity extends AppCompatActivity{
         APICaller.requestQueue.start();
     }
 
-    /*public void onSubmitButtonPressed(Site site){
-        APICaller.postSite(site);
 
-    }*/
 }
