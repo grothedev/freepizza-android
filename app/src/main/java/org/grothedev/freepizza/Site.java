@@ -1,5 +1,7 @@
 package org.grothedev.freepizza;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -48,7 +50,13 @@ public class Site {
         this.votesTrue = 0;
     }
 
+    //empty site
+    public Site(){
+
+    }
+
     public String toString(){
         return location + " - " + food + "\n" + day + " - " + start + " to " + end;
     }
+
 }

@@ -28,4 +28,10 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.android.volley:volley:1.0.0'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'com.borax12.materialdaterangepicker:library:1.9'
+}
+
+repositories {
+    jcenter()
 }

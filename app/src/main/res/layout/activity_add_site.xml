@@ -3,26 +3,40 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/editTextFood"
+        android:hint = "What type of food?"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="text" />
+        android:inputType="text"
+        android:layout_margin="2dp"/>
 
-    <EditText
-        android:id="@+id/editTextInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text" />
-
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/editTextLocation"
+        android:hint = "Where is this food?"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="text" />
+        android:inputType="text"
+        android:layout_margin="2dp"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/editTextInfo"
+        android:hint = "Any other important information?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:layout_margin="2dp"/>
+
+    <Button
+        android:id = "@+id/buttonChooseDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showDatePicker"
+        android:text = "Select the date"/>
+
 
     <DatePicker
         android:id="@+id/datePicker"

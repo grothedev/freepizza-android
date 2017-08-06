@@ -2,7 +2,9 @@ package org.grothedev.freepizza;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +31,8 @@ public class AddSiteActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_site);
 
+        toAdd = new Site();
+
         initUIElements();
     }
 
@@ -50,14 +54,14 @@ public class AddSiteActivity extends Activity {
                 //any validation necessary here or ok to deal with on server?
 
                 //formatting date and time
-                String day = dayInput.getYear() + "-" + dayInput.getMonth() + "-" + dayInput.getDayOfMonth();
+
                 String startTime = startInput.getCurrentHour() + ":" + startInput.getCurrentMinute() + ":00";
                 String endTime = endInput.getCurrentHour() + ":" + endInput.getCurrentMinute() + ":00";
 
                 toAdd = new Site(foodInput.getText().toString(),
                         infoInput.getText().toString(),
                         locationInput.getText().toString(),
-                        day,
+                        "",
                         startTime,
                         endTime);
 
@@ -66,6 +70,12 @@ public class AddSiteActivity extends Activity {
         });
     }
 
+    //shows the dialog to choose the day from calendar
+    public void showDatePicker(View v){
+        DialogFragment dayPickerFragment = new DayPickerFragment();
 
+        dayPickerFragment.show(getFragmentManager(), "daypicker");
+
+    }
 
 }
