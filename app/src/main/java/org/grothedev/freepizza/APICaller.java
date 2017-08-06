@@ -78,12 +78,39 @@ public class APICaller {
 
         final Site toAdd = site;
 
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("food", toAdd.food);
+        params.put("info", toAdd.info);
+        params.put("day", toAdd.day);
+        params.put("start", toAdd.start);
+        params.put("end", toAdd.end);
+        params.put("location", toAdd.location);
+        params.put("votes_total", "0");
+        params.put("votes_true", "0");
 
+        makePostRequest(url, SITES_STORE, params);
+
+        waitForCompletion();
+    }
+
+    public static void postVote(Vote v){
+        String url = "http://gdev.ddns.net:8000/api/votes";
+        final Map<String, String> params = new HashMap<>();
+        params.put("site_id", Integer.toString(v.getSiteId()));
+        params.put("true", Boolean.toString(v.getExists()));
+
+        makePostRequest(url, VOTES_STORE, params);
+
+        waitForCompletion();
+    }
+
+    private static void makePostRequest(String url, final int code, final Map<String, String> params){
+        resetFlags();
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response){
-                        handleResponse(response, SITES_STORE);
+                        handleResponse(response, code);
                     }
                 },
                 new Response.ErrorListener(){
@@ -94,15 +121,6 @@ public class APICaller {
                 }){
             @Override
             protected Map<String, String> getParams(){
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("food", toAdd.food);
-                params.put("info", toAdd.info);
-                params.put("day", toAdd.day);
-                params.put("start", toAdd.start);
-                params.put("end", toAdd.end);
-                params.put("location", toAdd.location);
-                params.put("votes_total", "0");
-                params.put("votes_true", "0");
                 return params;
             }
             @Override
@@ -115,10 +133,7 @@ public class APICaller {
         };
 
         requestQueue.add(request);
-
-        waitForCompletion();
     }
-
 
     private static void handleResponse(String response, int code){
         switch (code){
@@ -154,6 +169,25 @@ public class APICaller {
                 break;
             case SITES_LOCATION_SEARCH:
                 //TODO
+                break;
+            case VOTES_STORE:
+                if (response.length() == 0){
+                    success = false;
+                } else {
+                    JSONObject jo = null;
+                    try {
+                        jo = new JSONObject(response.get(0).toString());
+                        if (jo.get("success") == 1){
+                            success = true;
+                        } else {
+                            success = false;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                done = true;
                 break;
             default:
                 break;
