@@ -177,7 +177,7 @@ public class APICaller {
                     JSONObject jo = null;
                     try {
                         jo = new JSONObject(response.get(0).toString());
-                        if (jo.get("success") == 1){
+                        if (jo.get("success") == "1"){
                             success = true;
                         } else {
                             success = false;

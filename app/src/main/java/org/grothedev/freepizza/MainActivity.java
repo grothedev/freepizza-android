@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity{
     ListView siteListView;
     ArrayAdapter<Site> listAdapter;
     Button addSiteButton;
-
+    SwipeRefreshLayout refreshLayout;
 
     Site[] sites;
 
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity{
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
 
+
         addSiteButton = (Button) findViewById(R.id.buttonAddSite);
         addSiteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +71,17 @@ public class MainActivity extends AppCompatActivity{
                 Intent addSiteIntent = new Intent(getApplicationContext(), AddSiteActivity.class);
 
                 startActivity(addSiteIntent);
+            }
+        });
+
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayoutList);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //CURRENTLY working on this
+                Log.d("refreshing", getCallingActivity().getClassName());
+                new GetSitesTask().execute(getCallingActivity(), siteListView);
+                refreshLayout.setRefreshing(false);
             }
         });
 

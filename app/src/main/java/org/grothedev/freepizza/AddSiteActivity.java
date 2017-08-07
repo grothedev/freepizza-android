@@ -108,8 +108,6 @@ public class AddSiteActivity extends Activity implements DatePickerDialog.OnDate
             toAdd.end = timeStr;
             endTimeButton.setText("To: " + timeStr);
         }
-
-
     }
 
 
