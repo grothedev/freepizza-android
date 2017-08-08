@@ -99,6 +99,8 @@ public class APICaller {
         params.put("site_id", Integer.toString(v.getSiteId()));
         params.put("true", Boolean.toString(v.getExists()));
 
+        Log.d("ote", "vv");
+
         makePostRequest(url, VOTES_STORE, params);
 
         waitForCompletion();
@@ -173,8 +175,10 @@ public class APICaller {
             case VOTES_STORE:
                 if (response.length() == 0){
                     success = false;
+                    Log.d("response", "none");
                 } else {
                     JSONObject jo = null;
+                    Log.d("response", response.toString());
                     try {
                         jo = new JSONObject(response.get(0).toString());
                         if (jo.get("success") == "1"){

@@ -30,6 +30,7 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'com.borax12.materialdaterangepicker:library:1.9'
+    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
 }
 
 repositories {

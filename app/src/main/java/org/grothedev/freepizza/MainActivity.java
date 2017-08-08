@@ -20,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
+import com.gc.materialdesign.views.ButtonFloat;
 
 import java.io.Serializable;
 
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity{
 
     ListView siteListView;
     ArrayAdapter<Site> listAdapter;
-    Button addSiteButton;
+    ButtonFloat addSiteButton;
     SwipeRefreshLayout refreshLayout;
 
     Site[] sites;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-        addSiteButton = (Button) findViewById(R.id.buttonAddSite);
+        addSiteButton = (ButtonFloat) findViewById(R.id.buttonAddSite);
         addSiteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
