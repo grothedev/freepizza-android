@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -61,7 +62,11 @@ public class AddSiteActivity extends Activity implements DatePickerDialog.OnDate
                     toAdd.info = infoInput.getText().toString();
                     toAdd.location = locationInput.getText().toString();
 
-                    new AddSiteTask().execute(toAdd);
+                    ProgressBar progress = new ProgressBar(getApplicationContext());
+                    progress.setIndeterminate(true);
+                    progress.setProgress(0);
+                    progress.setVisibility(View.VISIBLE); //TODO progress bar not working
+                    new AddSiteTask().execute(toAdd, progress);
                 } else {
                     toast("you must set a date, start time, and end time");
                 }
