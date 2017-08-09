@@ -99,9 +99,7 @@ public class APICaller {
         params.put("site_id", Integer.toString(v.getSiteId()));
         params.put("true", Boolean.toString(v.getExists()));
 
-        Log.d("ote", "vv");
-
-        makePostRequest(url, VOTES_STORE, params);
+        makePostRequest(url, VOTES_STORE, params); //TODO something is wrong with the form in which the data is being sent
 
         waitForCompletion();
     }
@@ -118,7 +116,8 @@ public class APICaller {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        Log.d("error", "there was an error accessing the server");
+                        Log.d("error", "error interacting with the server");
+
                     }
                 }){
             @Override
@@ -157,6 +156,10 @@ public class APICaller {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                done = true;
+                break;
+            case VOTES_STORE:
+                Log.d("vote response", ""+response);
                 done = true;
                 break;
         }

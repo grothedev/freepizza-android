@@ -21,5 +21,6 @@ public class VoteTask extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
+
     }
 }
