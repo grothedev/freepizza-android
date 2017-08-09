@@ -1,5 +1,6 @@
 package org.grothedev.freepizza;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -18,6 +19,8 @@ public class AddSiteTask extends AsyncTask {
 
     ProgressBar progress;
 
+    Activity callingActivity;
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -28,6 +31,8 @@ public class AddSiteTask extends AsyncTask {
     protected Object doInBackground(Object[] objects) {
         progress = (ProgressBar) objects[1];
         site = (Site) objects[0];
+        callingActivity = (Activity) objects[2];
+
         APICaller.postSite(site);
 
         return null;
@@ -39,5 +44,14 @@ public class AddSiteTask extends AsyncTask {
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
         progress.setVisibility(View.GONE);
+        Log.d("progress bar", "gone");
+        if (APICaller.success == true){
+            Log.d("sucess", "added site");
+            callingActivity.onBackPressed();
+            AddSiteActivity.toast("Thank you for your contribution!", callingActivity);
+        } else {
+            AddSiteActivity.toast("Food location was not able to be submitted. Try again.", callingActivity);
+            Log.d("failed", "did not add site");
+        }
     }
 }

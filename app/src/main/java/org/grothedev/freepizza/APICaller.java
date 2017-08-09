@@ -37,11 +37,11 @@ public class APICaller {
 
 
     static private final int SITES_INDEX = 0;
-    static private final int SITES_SHOW = 1;
+    static private final int SITES_SHOW = 1; //probably going to be unused
     static private final int SITES_LOCATION_SEARCH = 2;
     static private final int SITES_STORE = 4;
     static private final int VOTES_STORE = 5;
-    static private final int VOTES_INDEX = 6;
+    static private final int VOTES_INDEX = 6; //probably going to be unused
 
     static Site[] sites; //should this be stored in this class?
 
@@ -118,7 +118,7 @@ public class APICaller {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        Log.d("error", error.networkResponse.headers.toString() + ", " + error.networkResponse.data);
+                        Log.d("error", "there was an error accessing the server");
                     }
                 }){
             @Override
@@ -140,8 +140,23 @@ public class APICaller {
     private static void handleResponse(String response, int code){
         switch (code){
             case SITES_STORE:
-                    Log.d("add response", ""+response);
+                Log.d("add response", ""+response);
 
+                if (response == null){
+                    success = false;
+                    done = true;
+                    return;
+                }
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    if (jsonResponse.getInt("success") == 1){
+                        success = true;
+                    } else {
+                        success = false;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 done = true;
                 break;
         }
@@ -165,8 +180,9 @@ public class APICaller {
                             e.printStackTrace();
                         }
                     }
+                    success = true;
                 }
-                success = true;
+
                 done = true;
                 break;
             case SITES_LOCATION_SEARCH:

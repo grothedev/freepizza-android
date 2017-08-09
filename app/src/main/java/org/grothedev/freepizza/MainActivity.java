@@ -1,5 +1,6 @@
 package org.grothedev.freepizza;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -27,12 +28,14 @@ import java.io.Serializable;
 public class MainActivity extends AppCompatActivity{
 
     ListView siteListView;
-    ArrayAdapter<Site> listAdapter;
     ButtonFloat addSiteButton;
     SwipeRefreshLayout refreshLayout;
 
-    Site[] sites;
 
+
+    //set up a listview of all the "sites". a site is just the term i use to describe a location with its food and other info.
+    //set up the apicaller which uses a RequestQueue from the volley library to make requests to the server
+    //there is a button to allow the user to add new sites
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +44,7 @@ public class MainActivity extends AppCompatActivity{
         initUIElements();
         initAPICaller();
 
-        new GetSitesTask().execute(this, siteListView);
-
-
-        //wait for response, and update listview when data comes in
-
-        //onclick on each site brings up new view showing more info
+        getSites();
     }
 
     private void initUIElements(){
@@ -79,13 +77,15 @@ public class MainActivity extends AppCompatActivity{
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //CURRENTLY working on this
-                Log.d("refreshing", getCallingActivity().getClassName());
-                new GetSitesTask().execute(getCallingActivity(), siteListView);
+                getSites();
                 refreshLayout.setRefreshing(false);
             }
         });
 
+    }
+
+    private void getSites(){
+        new GetSitesTask().execute(this, siteListView);
     }
 
     private void initAPICaller(){
@@ -96,4 +96,8 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    protected void onResume(){
+        super.onResume();
+        getSites();
+    }
 }

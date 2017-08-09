@@ -73,5 +73,12 @@
         android:layout_gravity="center"
         android:minWidth="240dp"/>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:minHeight="20dip"
+        android:maxHeight="20dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.ProgressBar.Small"/>
 
 </LinearLayout>

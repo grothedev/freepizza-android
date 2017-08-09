@@ -37,6 +37,13 @@ public class GetSitesTask extends AsyncTask {
     @Override
     protected void onPostExecute(Object result){
 
+
+        if (APICaller.success == false){
+            Log.d("failed", "f");
+        } else {
+            Log.d("success", "s");
+        }
+
         ArrayAdapter<Site> listAdapter = new ArrayAdapter<Site>(context, R.layout.list_item, APICaller.sites);
         sitesListView.setAdapter(listAdapter);
         sitesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

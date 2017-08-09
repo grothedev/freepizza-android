@@ -28,7 +28,7 @@ public class AddSiteActivity extends Activity implements DatePickerDialog.OnDate
     Button submitButton;
     DatePicker dayInput;
     Button dayButton, startTimeButton, endTimeButton;
-
+    ProgressBar progress;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +49,10 @@ public class AddSiteActivity extends Activity implements DatePickerDialog.OnDate
         startTimeButton = (Button) findViewById(R.id.buttonChooseStart);
         endTimeButton = (Button) findViewById(R.id.buttonChooseEnd);
 
+        progress = (ProgressBar) findViewById(R.id.progressBar);
+        progress.setIndeterminate(true);
+        progress.setProgress(0);
+        progress.setVisibility(View.GONE);
         submitButton = (Button) findViewById(R.id.buttonSubmit);
 
 
@@ -62,18 +66,18 @@ public class AddSiteActivity extends Activity implements DatePickerDialog.OnDate
                     toAdd.info = infoInput.getText().toString();
                     toAdd.location = locationInput.getText().toString();
 
-                    ProgressBar progress = new ProgressBar(getApplicationContext());
-                    progress.setIndeterminate(true);
-                    progress.setProgress(0);
-                    progress.setVisibility(View.VISIBLE); //TODO progress bar not working
-                    new AddSiteTask().execute(toAdd, progress);
+
+                    progress.setVisibility(View.VISIBLE);
+                    addSite();
                 } else {
                     toast("you must set a date, start time, and end time");
                 }
-
-
             }
         });
+    }
+
+    private void addSite(){
+        new AddSiteTask().execute(toAdd, progress, this);
     }
 
     //shows the dialog to choose the day from calendar
@@ -118,6 +122,11 @@ public class AddSiteActivity extends Activity implements DatePickerDialog.OnDate
 
     public void toast(String s){
         Toast t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
+        t.show();
+    }
+
+    public static void toast(String s, Activity a){
+        Toast t = Toast.makeText(a.getApplicationContext(), s, Toast.LENGTH_SHORT);
         t.show();
     }
 }
