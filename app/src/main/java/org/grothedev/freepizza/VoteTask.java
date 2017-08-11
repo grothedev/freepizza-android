@@ -21,6 +21,14 @@ public class VoteTask extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-
+        if (APICaller.success){
+            AddSiteActivity.toast("Successfully voted", APICaller.mainActivity);
+        } else {
+            if (APICaller.msg.equals("dupe")){
+                AddSiteActivity.toast("You have already voted on the existence of food at this location", APICaller.mainActivity);
+            } else {
+                AddSiteActivity.toast("There was an unknown error. Please contact the developer upon persistence of the error.", APICaller.mainActivity);
+            }
+        }
     }
 }

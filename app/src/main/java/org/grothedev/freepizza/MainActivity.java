@@ -89,10 +89,14 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void initAPICaller(){
+        //setting up the request queue which will allow easily making post and get requests
         Cache cache = new DiskBasedCache(getCacheDir(), 1024*1024);
         Network network = new BasicNetwork(new HurlStack());
         APICaller.requestQueue = new RequestQueue(cache, network);
         APICaller.requestQueue.start();
+
+        //giving main activity so can toast on result of requests
+        APICaller.mainActivity = this;
     }
 
 

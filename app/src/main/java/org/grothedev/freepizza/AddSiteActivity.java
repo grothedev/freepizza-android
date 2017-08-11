@@ -77,7 +77,7 @@ public class AddSiteActivity extends Activity implements DatePickerDialog.OnDate
     }
 
     private void addSite(){
-        new AddSiteTask().execute(toAdd, progress, this);
+        new AddSiteTask().execute(toAdd, progress);
     }
 
     //shows the dialog to choose the day from calendar

@@ -31,7 +31,6 @@ public class AddSiteTask extends AsyncTask {
     protected Object doInBackground(Object[] objects) {
         progress = (ProgressBar) objects[1];
         site = (Site) objects[0];
-        callingActivity = (Activity) objects[2];
 
         APICaller.postSite(site);
 
@@ -48,9 +47,9 @@ public class AddSiteTask extends AsyncTask {
         if (APICaller.success == true){
             Log.d("sucess", "added site");
             callingActivity.onBackPressed();
-            AddSiteActivity.toast("Thank you for your contribution!", callingActivity);
+            AddSiteActivity.toast("Thank you for your contribution!", APICaller.mainActivity);
         } else {
-            AddSiteActivity.toast("Food location was not able to be submitted. Try again.", callingActivity);
+            AddSiteActivity.toast("Food location was not able to be submitted. Try again.", APICaller.mainActivity);
             Log.d("failed", "did not add site");
         }
     }

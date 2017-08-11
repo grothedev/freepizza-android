@@ -1,5 +1,6 @@
 package org.grothedev.freepizza;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -43,10 +44,12 @@ public class APICaller {
     static private final int VOTES_STORE = 5;
     static private final int VOTES_INDEX = 6; //probably going to be unused
 
+    static Activity mainActivity;
     static Site[] sites; //should this be stored in this class?
 
     static boolean done = false; //used to signifity when the current operation is complete
     static boolean success = false; //signifies success of operation (ex: if a site has successfully been submitted to the server)
+    static String msg = null; //an extra message so the calling task can get more information. ex: if an unsuccesful vote attempt was a duplicate or a different error
 
     static int timeout = 100;
 
@@ -95,11 +98,15 @@ public class APICaller {
 
     public static void postVote(Vote v){
         String url = "http://gdev.ddns.net:8000/api/votes";
-        final Map<String, String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("site_id", Integer.toString(v.getSiteId()));
-        params.put("true", Boolean.toString(v.getExists()));
+        if (v.getExists()){
+            params.put("true", "1");
+        } else params.put("true", "0");
 
-        makePostRequest(url, VOTES_STORE, params); //TODO something is wrong with the form in which the data is being sent
+        Log.d("params", params.toString());
+
+        makePostRequest(url, VOTES_STORE, params);
 
         waitForCompletion();
     }
@@ -159,7 +166,16 @@ public class APICaller {
                 done = true;
                 break;
             case VOTES_STORE:
-                Log.d("vote response", ""+response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    if (jsonResponse.getInt("success") == 1){
+                        success = true;
+                    } else {
+                        success = false;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 done = true;
                 break;
         }
@@ -204,6 +220,9 @@ public class APICaller {
                             success = true;
                         } else {
                             success = false;
+                            if (jo.get("dupe").equals(true)){
+                                msg = "dupe";
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -235,5 +254,6 @@ public class APICaller {
     private static void resetFlags(){
         done = false;
         success = false;
+        msg = null;
     }
 }

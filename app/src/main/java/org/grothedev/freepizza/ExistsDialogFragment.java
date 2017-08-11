@@ -19,6 +19,7 @@ public class ExistsDialogFragment extends DialogFragment {
         Bundle args = getArguments();
         final int siteId = args.getInt("siteId");
 
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.dialog_exists_prompt)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
