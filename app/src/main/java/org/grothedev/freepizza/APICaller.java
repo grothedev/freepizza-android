@@ -190,7 +190,7 @@ public class APICaller {
 
                 if (response.length() == 0) {
                     success = false;
-                    sites = new Site[]{new Site("there was an error retrieving the locations from the server", "", "", "", "", "")};
+                    //sites = new Site[]{new Site("there was an error retrieving the locations from the server", "", "", "", "", "")};
                 }
                 else {
                     sites = new Site[response.length()];

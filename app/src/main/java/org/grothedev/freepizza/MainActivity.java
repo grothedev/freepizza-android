@@ -1,6 +1,7 @@
 package org.grothedev.freepizza;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -9,6 +10,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -78,7 +82,6 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onRefresh() {
                 getSites();
-                refreshLayout.setRefreshing(false);
             }
         });
 
@@ -99,6 +102,27 @@ public class MainActivity extends AppCompatActivity{
         APICaller.mainActivity = this;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_about:
+                DialogFragment aboutFrag = new AboutFragment();
+                aboutFrag.show(getFragmentManager(), "About");
+                return true;
+            case R.id.menu_refresh:
+                refreshLayout.setRefreshing(true);
+                getSites();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     protected void onResume(){
         super.onResume();

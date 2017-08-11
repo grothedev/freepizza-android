@@ -53,7 +53,11 @@ public class Site {
     }
 
     public String toString(){
-        return location + " - " + food + "\n" + day + " - " + start + " to " + end;
+        String s = location + " - " + food + "\n" + day + " - " + start + " to " + end;
+        if (probExists != -1){
+            s += "     " + (probExists*100) + "%";
+        }
+        return s;
     }
 
 }

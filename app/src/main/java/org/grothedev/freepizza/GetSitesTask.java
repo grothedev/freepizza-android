@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,11 +36,11 @@ public class GetSitesTask extends AsyncTask {
     @Override
     protected void onPostExecute(Object result){
 
+        ((SwipeRefreshLayout)context.findViewById(R.id.refreshLayoutList)).setRefreshing(false);
 
         if (APICaller.success == false){
-            Log.d("failed", "f");
-        } else {
-            Log.d("success", "s");
+            AddSiteActivity.toast("There was an error retrieving the locations from the server", context);
+            return;
         }
 
         ArrayAdapter<Site> listAdapter = new ArrayAdapter<Site>(context, R.layout.list_item, APICaller.sites);
