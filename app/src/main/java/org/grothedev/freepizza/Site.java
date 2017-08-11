@@ -19,7 +19,7 @@ public class Site {
     String day, start, end;
     String food;
     String location;
-    int votesTotal, votesTrue;
+    double probExists;
 
     //receives a json object from json array representing a site
     public Site(JSONObject jo){
@@ -31,8 +31,7 @@ public class Site {
             this.end = jo.getString("end");
             this.food = jo.getString("food");
             this.location = jo.getString("location");
-            this.votesTotal = jo.getInt("votes_total");
-            this.votesTrue = jo.getInt("votes_true");
+            this.probExists = jo.getDouble("prob_exists");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -46,8 +45,6 @@ public class Site {
         this.end = end;
         this.food = food;
         this.location = location;
-        this.votesTotal = 0;
-        this.votesTrue = 0;
     }
 
     //empty site

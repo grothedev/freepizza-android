@@ -49,7 +49,7 @@ public class APICaller {
 
     static boolean done = false; //used to signifity when the current operation is complete
     static boolean success = false; //signifies success of operation (ex: if a site has successfully been submitted to the server)
-    static String msg = null; //an extra message so the calling task can get more information. ex: if an unsuccesful vote attempt was a duplicate or a different error
+    static String msg = ""; //an extra message so the calling task can get more information. ex: if an unsuccesful vote attempt was a duplicate or a different error
 
     static int timeout = 100;
 
@@ -172,6 +172,9 @@ public class APICaller {
                         success = true;
                     } else {
                         success = false;
+                        if (jsonResponse.getBoolean("dupe")){
+                            msg = "dupe";
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -187,7 +190,7 @@ public class APICaller {
 
                 if (response.length() == 0) {
                     success = false;
-                    sites = new Site[]{new Site("there was an error retreiving the locations from the server", "", "", "", "", "")};
+                    sites = new Site[]{new Site("there was an error retrieving the locations from the server", "", "", "", "", "")};
                 }
                 else {
                     sites = new Site[response.length()];
@@ -254,6 +257,6 @@ public class APICaller {
     private static void resetFlags(){
         done = false;
         success = false;
-        msg = null;
+        msg = "";
     }
 }

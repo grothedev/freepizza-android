@@ -27,8 +27,6 @@ public class GetSitesTask extends AsyncTask {
 
         APICaller.getSites();
 
-        //TODO i think i will also get the votes for each site here and put it into the sites array
-
         sitesListView = (ListView) objects[1];
 
         return null;
