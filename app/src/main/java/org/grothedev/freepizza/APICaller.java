@@ -55,7 +55,7 @@ public class APICaller {
 
     public static void getSites(){
         resetFlags();
-        String url = "http://gdev.ddns.net:8000/api/sites";
+        String url = R.string.url + "sites";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>(){
                     @Override
@@ -77,7 +77,7 @@ public class APICaller {
     }
 
     public static void postSite(Site site){
-        String url = "http://gdev.ddns.net:8000/api/sites";
+        String url = R.string.url + "sites";
 
         final Site toAdd = site;
 
@@ -97,7 +97,7 @@ public class APICaller {
     }
 
     public static void postVote(Vote v){
-        String url = "http://gdev.ddns.net:8000/api/votes";
+        String url = R.string.url + "votes";
         Map<String, String> params = new HashMap<>();
         params.put("site_id", Integer.toString(v.getSiteId()));
         if (v.getExists()){

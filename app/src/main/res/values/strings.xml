@@ -4,4 +4,5 @@
     <string name = "buttonWidth">80dp</string>
     <string name="dialog_exists_prompt">Let peoplee know if there is really food here or not</string>
     <string name = "dialog_about">The purpose of this app is to allow users to know where free food is being served on a college campus near them. I randomly thought of it one day and was surprised to find that no one else had already made it, so I went ahead and made it. If you have any questions, comments, suggestions, etc. send me an email at grothedev@gmail.com. \n \nSource code: https://github.com/grothedev/freepizza-android \nAPI source and spec: https://github.com/grothedev/freepizza-api</string>
+    <string name = "url">http://gdev.ddns.net:8888/api/</string>
 </resources>
