@@ -30,7 +30,7 @@ public class DayPickerFragment extends DialogFragment{
 
         dateSetListener = (DatePickerDialog.OnDateSetListener) getActivity();
 
-        return new DatePickerDialog(getActivity(), dateSetListener, year, month+1, day); //adding 1 to month because starts at 0
+        return new DatePickerDialog(getActivity(), dateSetListener, year, month, day);
     }
 
 }

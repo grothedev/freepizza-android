@@ -31,6 +31,7 @@ public class AddSiteTask extends AsyncTask {
     protected Object doInBackground(Object[] objects) {
         progress = (ProgressBar) objects[1];
         site = (Site) objects[0];
+        callingActivity = (Activity) objects[2];
 
         APICaller.postSite(site);
 

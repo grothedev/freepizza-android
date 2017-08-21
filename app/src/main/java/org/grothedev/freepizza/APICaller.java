@@ -55,7 +55,10 @@ public class APICaller {
 
     public static void getSites(){
         resetFlags();
-        String url = R.string.url + "sites";
+        String url = mainActivity.getResources().getString(R.string.url) + "sites";
+        Log.d("url", url);
+
+
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>(){
                     @Override
@@ -77,7 +80,7 @@ public class APICaller {
     }
 
     public static void postSite(Site site){
-        String url = R.string.url + "sites";
+        String url = mainActivity.getResources().getString(R.string.url) + "sites";
 
         final Site toAdd = site;
 
@@ -97,7 +100,7 @@ public class APICaller {
     }
 
     public static void postVote(Vote v){
-        String url = R.string.url + "votes";
+        String url = mainActivity.getResources().getString(R.string.url) + "votes";
         Map<String, String> params = new HashMap<>();
         params.put("site_id", Integer.toString(v.getSiteId()));
         if (v.getExists()){

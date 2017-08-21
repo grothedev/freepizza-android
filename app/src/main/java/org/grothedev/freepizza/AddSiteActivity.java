@@ -77,7 +77,7 @@ public class AddSiteActivity extends Activity implements DatePickerDialog.OnDate
     }
 
     private void addSite(){
-        new AddSiteTask().execute(toAdd, progress);
+        new AddSiteTask().execute(toAdd, progress, this);
     }
 
     //shows the dialog to choose the day from calendar
@@ -102,7 +102,7 @@ public class AddSiteActivity extends Activity implements DatePickerDialog.OnDate
     //setting the date and times from result from date and time picker dialogs
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-        String dayStr = year + "-" + month + "-" + day;
+        String dayStr = year + "-" + (month+1) + "-" + day; //add 1 to month for human readable
         toAdd.day = dayStr;
         dayButton.setText("Day: " + dayStr);
     }
