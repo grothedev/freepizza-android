@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity{
 
         initUIElements();
         initAPICaller();
-
-        getSites();
     }
 
     private void initUIElements(){

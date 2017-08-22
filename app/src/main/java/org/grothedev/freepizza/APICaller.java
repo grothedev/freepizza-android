@@ -56,7 +56,6 @@ public class APICaller {
     public static void getSites(){
         resetFlags();
         String url = mainActivity.getResources().getString(R.string.url) + "sites";
-        Log.d("url", url);
 
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -190,9 +189,9 @@ public class APICaller {
     private static void handleResponse(JSONArray response, int code){
         switch (code){
             case SITES_INDEX:
-
                 if (response.length() == 0) {
                     success = false;
+
                     //sites = new Site[]{new Site("there was an error retrieving the locations from the server", "", "", "", "", "")};
                 }
                 else {

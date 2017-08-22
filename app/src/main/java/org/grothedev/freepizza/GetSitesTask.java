@@ -49,8 +49,6 @@ public class GetSitesTask extends AsyncTask {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //make an alert dialog with yes or no does the food location exists (pass the site id to the fragment)
-
-
                 int siteId = ((Site)sitesListView.getItemAtPosition(position)).id;
                 ExistsDialogFragment existsDialog = ExistsDialogFragment.newInstance(siteId);
 
